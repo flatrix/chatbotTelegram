@@ -40,7 +40,7 @@ def inputFeedback(update, context):
     else:
         message = "Muito obrigada pelo seu feedback!"
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)
-        cancel
+        return ConversationHandler.END
 
 
 def inputFeedback2(update, context):
