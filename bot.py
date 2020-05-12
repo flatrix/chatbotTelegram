@@ -4,7 +4,7 @@ def welcome(update, context):
     username = update.message.from_user.username
     firstName = update.message.from_user.first_name
     lastName = update.message.from_user.last_name
-    message = 'Olá, ' + firstName + lastName'!'
+    message = 'Olá, ' + firstName +' '+ lastName +'!'
     #message = "Olá, Flávioss!"
     print(message)
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
