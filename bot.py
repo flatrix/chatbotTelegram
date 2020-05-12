@@ -28,7 +28,7 @@ def feedback(update, context):
     update.message.reply_text(message, reply_markup=ReplyKeyboardMarkup([], one_time_keyboard=True)) 
     return STATE1
 
-ef inputFeedback(update, context):
+def inputFeedback(update, context):
     feedback = update.message.text
     print(feedback)
     if len(feedback) < 10:
