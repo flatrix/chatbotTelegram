@@ -10,7 +10,7 @@ def welcome(update, context):
     username = update.message.from_user.username
     firstName = update.message.from_user.first_name
     lastName = update.message.from_user.last_name
-    message = 'Olás, ' + firstName +' '+ lastName +'!'
+    message = 'Olá, ' + firstName +' '+ lastName +'!'
     #message = "Olá, Flávioss!"
     print(message)
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
@@ -29,6 +29,11 @@ def feedback(update, context):
     update.message.reply_text(message, reply_markup=ReplyKeyboardMarkup([], one_time_keyboard=True)) 
     return STATE1
 
+def mensagem(update, context):
+    message = 'Por favor, digite uma mensagem para enviar:'
+    update.message.reply_text(message, reply_markup=ReplyKeyboardMarkup([], one_time_keyboard=True)) 
+    return STATE3
+
 def inputFeedback(update, context):
     feedback = update.message.text
     print(feedback)
@@ -46,6 +51,12 @@ def inputFeedback(update, context):
 def inputFeedback2(update, context):
     feedback = update.message.text
     message = "Muito obrigada pelo seu feedback!"
+    context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+    return ConversationHandler.END
+
+def inputMensagem(update, context):
+    mensagem = update.message.text
+    message = "Muito obrigada pela sua mensagem!"
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
     return ConversationHandler.END
 
@@ -73,12 +84,14 @@ def main():
     updater = Updater(token=token, use_context=True)
 
     conversation_handler = ConversationHandler(
-        entry_points=[CommandHandler('feedback', feedback)],
+        entry_points=[CommandHandler('feedback', feedback)],[CommandHandler('mensagem', mensagem)]
         states={
             STATE1: [MessageHandler(Filters.text, inputFeedback)],
-            STATE2: [MessageHandler(Filters.text, inputFeedback2)]
+            STATE2: [MessageHandler(Filters.text, inputFeedback2)],
+            STATE3: [MessageHandler(Filters.text, inputMensagem)]
         },
         fallbacks=[CommandHandler('cancel', cancel)])
+
     updater.dispatcher.add_handler(conversation_handler)
     updater.dispatcher.add_handler(CommandHandler('nota', askForNota))
     updater.dispatcher.add_handler(CallbackQueryHandler(getNota))
