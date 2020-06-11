@@ -85,7 +85,7 @@ def main():
 
     conversation_handler = ConversationHandler(
         #entry_points=[CommandHandler('feedback', feedback)],
-        entry_points=[CommandHandler('feedback', feedback)],[CommandHandler('mensagem', mensagem)],
+        entry_points=[CommandHandler('mensagem', mensagem)],
         states={
             STATE1: [MessageHandler(Filters.text, inputFeedback)],
             STATE2: [MessageHandler(Filters.text, inputFeedback2)],
